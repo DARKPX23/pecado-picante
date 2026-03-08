@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pecado Picante 🌶</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="logo">
+
+<img src="img/logo.png">
+
+<h2>Pecado Picante</h2>
+
+</div>
+
+<div class="nav-right">
+
+<input id="buscador" placeholder="Buscar salsa..." onkeyup="buscarProducto()">
+
+<a href="carrito.html" class="cart">
+
+🛒 <span id="contador">0</span>
+
+</a>
+
+<button onclick="logout()" class="logout">Salir</button>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>Las Mejores Salsas de México 🌶</h1>
+
+<p>Sabor auténtico mexicano en cada gota</p>
+
+</div>
+
+</section>
+
+<section class="products-container">
+
+<h2>Nuestras Salsas</h2>
+
+<div id="productos" class="products"></div>
+
+</section>
+
+<script src="js/cart.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script>
+updateCart()
+</script>
+
+</body>
+
+</html>

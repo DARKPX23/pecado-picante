@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+<h2>💳 Finalizar compra</h2>
+<a href="carrito.html" class="volver">← Volver</a>
+</header>
+
+<div class="checkout-container">
+
+<h2>Selecciona método de pago</h2>
+
+<div class="metodos-pago">
+
+<label class="metodo">
+<input type="radio" name="pago">
+💳 Tarjeta de Crédito
+</label>
+
+<label class="metodo">
+<input type="radio" name="pago">
+💳 Tarjeta de Débito
+</label>
+
+<label class="metodo">
+<input type="radio" name="pago">
+🅿 PayPal
+</label>
+
+<label class="metodo">
+<input type="radio" name="pago">
+🏪 Pagar en OXXO
+</label>
+
+<label class="metodo">
+<input type="radio" name="pago">
+🎟 Vales de despensa
+</label>
+
+</div>
+
+<button class="btn-comprar" onclick="pagar()">
+Confirmar compra
+</button>
+
+</div>
+
+<script>
+
+function pagar(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+let products = JSON.parse(localStorage.getItem("products")) || []
+
+let compras = JSON.parse(localStorage.getItem("compras")) || []
+
+
+cart.forEach(c=>{
+
+let producto = products.find(p=>p.name === c.name)
+
+if(producto && producto.stock > 0){
+
+producto.stock -= 1
+
+compras.push(c)
+
+}
+
+})
+
+localStorage.setItem("products",JSON.stringify(products))
+
+localStorage.setItem("compras",JSON.stringify(compras))
+
+localStorage.removeItem("cart")
+
+alert("Compra realizada 🌶")
+
+window.location="tienda.html"
+
+}
+
+</script>
+
+</body>
+</html>

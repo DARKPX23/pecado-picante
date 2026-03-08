@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito</title>
+<link rel="stylesheet" href="css/styles.css">
+
+<style>
+.img-carrito{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-right:15px;
+}
+
+.btn-eliminar{
+  background:#ff1f1f;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.btn-eliminar:hover{
+  background:#ff4d4d;
+  transform:scale(1.05);
+}
+
+.btn-cantidad{
+  background:#8B0000;
+  border:none;
+  color:white;
+  padding:5px 10px;
+  border-radius:5px;
+  cursor:pointer;
+  margin:0 5px;
+  font-weight:bold;
+}
+
+.btn-cantidad:hover{
+  background:#ff1f1f;
+}
+
+.item-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.carrito-total{
+  margin-top:20px;
+}
+
+.carrito-vacio{
+  text-align:center;
+  font-size:18px;
+  opacity:0.8;
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+<h2>🛒 Tu carrito</h2>
+<a href="tienda.html" class="volver">← Volver a la tienda</a>
+</header>
+
+<div class="carrito-container">
+
+<div id="carrito" class="carrito-lista"></div>
+
+<div class="carrito-total" id="carrito-total">
+<h2>Total: $<span id="total">0</span></h2>
+
+<button onclick="checkout()" class="btn-comprar" id="btn-pagar">
+Ir a pagar
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+let div = document.getElementById("carrito")
+let totalEl = document.getElementById("total")
+let btnPagar = document.getElementById("btn-pagar")
+
+function mostrarCarrito(){
+  div.innerHTML = ""
+  let total = 0
+
+  if(cart.length === 0){
+  div.innerHTML = "<p class='carrito-vacio'>Agrega productos a tu carrito 🌶</p>"
+  document.getElementById("carrito-total").style.display = "none" // oculta total y botón
+  return
+} else {
+  document.getElementById("carrito-total").style.display = "block" // muestra total y botón
+}
+
+  cart.forEach((p,index) => {
+    div.innerHTML += `
+    <div class="item-carrito">
+
+      <img src="${p.image}" class="img-carrito">
+
+      <div class="item-info">
+        <h3>${p.name}</h3>
+        <p>$${p.price}</p>
+
+        <button class="btn-cantidad" onclick="restar(${index})">-</button>
+        <span>${p.qty}</span>
+        <button class="btn-cantidad" onclick="sumar(${index})">+</button>
+      </div>
+
+      <button class="btn-eliminar" onclick="eliminarProducto(${index})">
+      ❌ Eliminar
+      </button>
+
+    </div>
+    `
+
+    total += p.price * p.qty
+  })
+
+  totalEl.innerText = total
+}
+
+// Funciones de cantidad
+function sumar(index){
+  cart[index].qty += 1
+  localStorage.setItem("cart", JSON.stringify(cart))
+  mostrarCarrito()
+}
+
+function restar(index){
+  if(cart[index].qty > 1){
+    cart[index].qty -= 1
+  } else {
+    // Confirmación antes de eliminar
+    if(confirm("¿Seguro que deseas eliminar este producto del carrito? 🌶")){
+      cart.splice(index,1)
+    } else {
+      return
+    }
+  }
+  localStorage.setItem("cart", JSON.stringify(cart))
+  mostrarCarrito()
+}
+
+// Eliminar producto
+function eliminarProducto(index){
+  if(confirm("¿Seguro que deseas eliminar este producto del carrito? 🌶")){
+    cart.splice(index,1)
+    localStorage.setItem("cart", JSON.stringify(cart))
+    mostrarCarrito()
+  }
+}
+
+// Checkout
+function checkout(){
+  if(cart.length === 0) return
+  window.location = "checkout.html"
+}
+
+// Inicializar carrito
+mostrarCarrito()
+
+</script>
+
+</body>
+</html>

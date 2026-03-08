@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<title>Panel Administrador</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<!-- HEADER ADMIN -->
+
+<div class="admin-header">
+
+<h1>🌶 Panel Administrador</h1>
+
+<button onclick="cerrarSesion()">Cerrar sesión</button>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+<div class="card">
+<h3>Total Productos</h3>
+<p id="totalProductos">0</p>
+</div>
+
+<div class="card">
+<h3>Valor Inventario</h3>
+<p id="valorInventario">$0</p>
+</div>
+
+<div class="card">
+<h3>Ventas</h3>
+<p id="ventasTotales">0</p>
+</div>
+
+</div>
+
+
+<!-- GRAFICA -->
+
+<div class="grafica">
+
+<h2>Ventas por Producto</h2>
+
+<canvas id="graficaVentas"></canvas>
+
+</div>
+
+
+<!-- PEDIDOS -->
+
+<div class="compras">
+
+<h2>Pedidos</h2>
+
+<table class="tabla-pedidos">
+
+<thead>
+<tr>
+<th>Producto</th>
+<th>Cantidad</th>
+<th>Total</th>
+<th>Fecha</th>
+</tr>
+</thead>
+
+<tbody id="tablaPedidos"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- AGREGAR PRODUCTOS -->
+
+<div class="admin-panel">
+
+<h2>Agregar Producto</h2>
+
+<input id="nombreProducto" placeholder="Nombre">
+
+<input id="precioProducto" type="number" placeholder="Precio">
+
+<input id="stockProducto" type="number" placeholder="Stock">
+
+<input id="imagenProducto" placeholder="Ruta imagen">
+
+<button onclick="agregarProducto()">Agregar</button>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>
