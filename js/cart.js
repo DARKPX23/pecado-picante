@@ -10,7 +10,7 @@ existe.qty += 1
 cart.push({
 name,
 price,
-image,   // 🔥 AGREGAMOS IMAGEN
+image,
 qty:1
 })
 }
@@ -30,7 +30,15 @@ let cart = JSON.parse(localStorage.getItem("cart")) || []
 let contador = document.getElementById("contador")
 
 if(contador){
-contador.innerText = cart.length
+
+let total = 0
+
+cart.forEach(p=>{
+total += p.qty
+})
+
+contador.innerText = total
+
 }
 
 }
@@ -41,7 +49,13 @@ function confirmarCompra(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || []
 
+if(cart.length === 0){
+alert("El carrito está vacío")
+return
+}
+
 let pedidos = JSON.parse(localStorage.getItem("pedidos")) || []
+let productos = JSON.parse(localStorage.getItem("productos")) || []
 
 cart.forEach(p=>{
 
@@ -52,9 +66,24 @@ total:p.price * p.qty,
 fecha:new Date().toLocaleDateString()
 })
 
+let producto = productos.find(prod =>
+prod.name.toLowerCase() === p.name.toLowerCase()
+)
+
+if(producto){
+
+producto.stock -= p.qty
+
+if(producto.stock < 0){
+producto.stock = 0
+}
+
+}
+
 })
 
 localStorage.setItem("pedidos",JSON.stringify(pedidos))
+localStorage.setItem("productos",JSON.stringify(productos))
 
 localStorage.removeItem("cart")
 
@@ -62,33 +91,8 @@ alert("Compra realizada 🌶")
 
 updateCart()
 
-}
-
-
-/* GUARDAR PRODUCTOS POR PRIMERA VEZ EN LOCALSTORAGE */
-
-let productosGuardados = JSON.parse(localStorage.getItem("productos"))
-
-if(!productosGuardados){
-
-let productosDefault = [
-
-{
-name:"Salsa Macha De Arandano",
-price:80,
-stock:10,
-image:"img/salsa-macha-arandano.jpg"
-},
-
-{
-name:"Salsa Macha Clasica",
-price:75,
-stock:12,
-image:"img/salsa-macha-clasica.jpg"
-}
-
-]
-
-localStorage.setItem("productos", JSON.stringify(productosDefault))
+window.location = "tienda.html"
 
 }
+
+updateCart()

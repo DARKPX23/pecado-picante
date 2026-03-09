@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 
@@ -23,7 +24,6 @@
 
 </div>
 
-
 <!-- DASHBOARD -->
 
 <div class="dashboard">
@@ -43,8 +43,17 @@
 <p id="ventasTotales">0</p>
 </div>
 
+<div class="card">
+<h3>Stock Total</h3>
+<p id="stockTotal">0</p>
 </div>
 
+<div class="card">
+<h3>Ganancias Totales</h3>
+<p id="gananciasTotales">$0</p>
+</div>
+
+</div>
 
 <!-- GRAFICA -->
 
@@ -56,6 +65,26 @@
 
 </div>
 
+<!-- TOP PRODUCTOS VENDIDOS -->
+
+<div class="top-productos">
+
+<h2>Top Productos Vendidos</h2>
+
+<table class="tabla-pedidos">
+
+<thead>
+<tr>
+<th>Producto</th>
+<th>Ventas</th>
+</tr>
+</thead>
+
+<tbody id="topProductos"></tbody>
+
+</table>
+
+</div>
 
 <!-- PEDIDOS -->
 
@@ -80,6 +109,29 @@
 
 </div>
 
+<!-- PRODUCTOS -->
+
+<div class="productos-admin">
+
+<h2>Productos</h2>
+
+<table class="tabla-pedidos">
+
+<thead>
+<tr>
+<th>Imagen</th>
+<th>Nombre</th>
+<th>Precio</th>
+<th>Stock</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaProductos"></tbody>
+
+</table>
+
+</div>
 
 <!-- AGREGAR PRODUCTOS -->
 
@@ -93,7 +145,7 @@
 
 <input id="stockProducto" type="number" placeholder="Stock">
 
-<input id="imagenProducto" placeholder="Ruta imagen">
+<input id="imagenProducto" type="file">
 
 <button onclick="agregarProducto()">Agregar</button>
 

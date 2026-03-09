@@ -1,22 +1,44 @@
-let products = JSON.parse(localStorage.getItem("productos")) || [
+let container = document.getElementById("productos")
+
+/* CREAR PRODUCTOS SI NO EXISTEN */
+
+let productosGuardados = JSON.parse(localStorage.getItem("productos"))
+
+if(!productosGuardados){
+
+let productosDefault = [
 
 {
 name:"Salsa Macha De Arandano",
 price:80,
 stock:10,
-image:"/img/salsa-macha-arandano.jpg"
+image:"img/salsa-macha-arandano.jpg"
 },
 
 {
 name:"Salsa Macha Clasica",
 price:75,
 stock:12,
-image:"/img/salsa-macha-clasica.jpg"
+image:"img/salsa-macha-clasica.jpg"
 }
 
 ]
 
-let container = document.getElementById("productos")
+localStorage.setItem("productos",JSON.stringify(productosDefault))
+
+}
+
+/* CARGAR PRODUCTOS */
+
+function cargarProductos(){
+
+let products = JSON.parse(localStorage.getItem("productos")) || []
+
+mostrarProductos(products)
+
+}
+
+/* MOSTRAR PRODUCTOS */
 
 function mostrarProductos(lista){
 
@@ -37,15 +59,11 @@ container.innerHTML += `
 <p class="price">$${p.price}</p>
 
 <p class="stock ${p.stock<=5?'low-stock':''}">
-
 Stock: ${p.stock}
-
 </p>
 
 <button onclick="addToCart('${p.name}',${p.price},'${p.image}')">
-
 Agregar al carrito
-
 </button>
 
 </div>
@@ -58,9 +76,11 @@ Agregar al carrito
 
 }
 
-mostrarProductos(products)
+/* BUSCADOR */
 
 function buscarProducto(){
+
+let products = JSON.parse(localStorage.getItem("productos")) || []
 
 let texto = document.getElementById("buscador").value.toLowerCase()
 
@@ -70,4 +90,10 @@ mostrarProductos(filtrados)
 
 }
 
-localStorage.setItem("productos", JSON.stringify(products))
+cargarProductos()
+
+/* ACTUALIZAR CONTADOR DEL CARRITO */
+
+if(typeof updateCart === "function"){
+updateCart()
+}

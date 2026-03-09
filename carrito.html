@@ -79,8 +79,8 @@
 <div class="carrito-total" id="carrito-total">
 <h2>Total: $<span id="total">0</span></h2>
 
-<button onclick="checkout()" class="btn-comprar" id="btn-pagar">
-Ir a pagar
+<button onclick="confirmarCompra()" class="btn-comprar" id="btn-pagar">
+Confirmar compra 🌶
 </button>
 
 </div>
@@ -93,89 +93,91 @@ let cart = JSON.parse(localStorage.getItem("cart")) || []
 
 let div = document.getElementById("carrito")
 let totalEl = document.getElementById("total")
-let btnPagar = document.getElementById("btn-pagar")
 
 function mostrarCarrito(){
-  div.innerHTML = ""
-  let total = 0
 
-  if(cart.length === 0){
-  div.innerHTML = "<p class='carrito-vacio'>Agrega productos a tu carrito 🌶</p>"
-  document.getElementById("carrito-total").style.display = "none" // oculta total y botón
-  return
-} else {
-  document.getElementById("carrito-total").style.display = "block" // muestra total y botón
+div.innerHTML=""
+let total=0
+
+if(cart.length===0){
+div.innerHTML="<p class='carrito-vacio'>Agrega productos a tu carrito 🌶</p>"
+document.getElementById("carrito-total").style.display="none"
+return
+}else{
+document.getElementById("carrito-total").style.display="block"
 }
 
-  cart.forEach((p,index) => {
-    div.innerHTML += `
-    <div class="item-carrito">
+cart.forEach((p,index)=>{
 
-      <img src="${p.image}" class="img-carrito">
+div.innerHTML+=`
 
-      <div class="item-info">
-        <h3>${p.name}</h3>
-        <p>$${p.price}</p>
+<div class="item-carrito">
 
-        <button class="btn-cantidad" onclick="restar(${index})">-</button>
-        <span>${p.qty}</span>
-        <button class="btn-cantidad" onclick="sumar(${index})">+</button>
-      </div>
+<img src="${p.image}" class="img-carrito">
 
-      <button class="btn-eliminar" onclick="eliminarProducto(${index})">
-      ❌ Eliminar
-      </button>
+<div class="item-info">
+<h3>${p.name}</h3>
+<p>$${p.price}</p>
 
-    </div>
-    `
+<button class="btn-cantidad" onclick="restar(${index})">-</button>
+<span>${p.qty}</span>
+<button class="btn-cantidad" onclick="sumar(${index})">+</button>
+</div>
 
-    total += p.price * p.qty
-  })
+<button class="btn-eliminar" onclick="eliminarProducto(${index})">
+❌ Eliminar
+</button>
 
-  totalEl.innerText = total
+</div>
+
+`
+
+total+=p.price*p.qty
+
+})
+
+totalEl.innerText=total
+
 }
 
-// Funciones de cantidad
 function sumar(index){
-  cart[index].qty += 1
-  localStorage.setItem("cart", JSON.stringify(cart))
-  mostrarCarrito()
+
+cart[index].qty+=1
+localStorage.setItem("cart",JSON.stringify(cart))
+mostrarCarrito()
+
 }
 
 function restar(index){
-  if(cart[index].qty > 1){
-    cart[index].qty -= 1
-  } else {
-    // Confirmación antes de eliminar
-    if(confirm("¿Seguro que deseas eliminar este producto del carrito? 🌶")){
-      cart.splice(index,1)
-    } else {
-      return
-    }
-  }
-  localStorage.setItem("cart", JSON.stringify(cart))
-  mostrarCarrito()
+
+if(cart[index].qty>1){
+cart[index].qty-=1
+}else{
+if(confirm("¿Eliminar producto?")){
+cart.splice(index,1)
+}
 }
 
-// Eliminar producto
+localStorage.setItem("cart",JSON.stringify(cart))
+mostrarCarrito()
+
+}
+
 function eliminarProducto(index){
-  if(confirm("¿Seguro que deseas eliminar este producto del carrito? 🌶")){
-    cart.splice(index,1)
-    localStorage.setItem("cart", JSON.stringify(cart))
-    mostrarCarrito()
-  }
+
+if(confirm("¿Eliminar producto?")){
+cart.splice(index,1)
+localStorage.setItem("cart",JSON.stringify(cart))
+mostrarCarrito()
 }
 
-// Checkout
-function checkout(){
-  if(cart.length === 0) return
-  window.location = "checkout.html"
 }
 
-// Inicializar carrito
 mostrarCarrito()
 
 </script>
+
+<script src="js/cart.js"></script>
 
 </body>
 </html>
